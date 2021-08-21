@@ -6,7 +6,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   List<Contact> contactList = [];
 
   @override
@@ -31,21 +30,26 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista'),
+        title: Text('Lista de contatos'),
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {
           var contact = contactList[index];
           return ListTile(
-            // leading: CicleAvatar(
-            //
-            // ),
+            leading: CircleAvatar(
+              child: ContactHelper.getIconByContactType(contact.type),
+              backgroundColor: Colors.grey[200],
+            ),
             title: Text(contact.name),
             subtitle: Text(contact.telephone),
+            trailing: IconButton(
+              icon: Icon(Icons.call),
+              onPressed: () => {},
+            ),
           );
         },
         separatorBuilder: (context, index) {
-          return Container();
+          return Divider();
         },
         itemCount: contactList.length,
       ),
@@ -74,11 +78,11 @@ class ContactHelper {
       case ContactType.CELL_PHONE:
         return Icon(Icons.phone_android, color: Colors.green[700]);
       case ContactType.JOB:
-        return Icon(Icons.work, color: Colors.green[600]);
+        return Icon(Icons.work, color: Colors.red[600]);
       case ContactType.FAVORITE:
-        return Icon(Icons.star, color: Colors.green[600]);
+        return Icon(Icons.star, color: Colors.yellow[600]);
       case ContactType.HOME:
-        return Icon(Icons.home, color: Colors.green[600]);
+        return Icon(Icons.home, color: Colors.purple[600]);
     }
   }
 }
